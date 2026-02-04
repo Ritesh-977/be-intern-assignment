@@ -1,4 +1,3 @@
-// src/controllers/post.controller.ts
 import { Request, Response } from 'express';
 import { Post } from '../entities/Post';
 import { Hashtag } from '../entities/Hashtag';
@@ -13,7 +12,6 @@ export class PostController {
   private userRepository = AppDataSource.getRepository(Users);
   private activityRepository = AppDataSource.getRepository(Activity)
 
-  // Fetch all posts
   async getAllPosts(req: Request, res: Response) {
     try {
       const posts = await this.postRepository.find({
@@ -26,7 +24,6 @@ export class PostController {
     }
   }
 
-  // Fetch a single post by ID
   async getPostById(req: Request, res: Response) {
     try {
       const post = await this.postRepository.findOne({
@@ -42,7 +39,6 @@ export class PostController {
     }
   }
 
-  // Create a new post
   async createPost(req: Request, res: Response) {
     try {
       const { content, hashtags } = req.body;
@@ -103,7 +99,6 @@ export class PostController {
     }
   }
 
-  // Update an existing post
   async updatePost(req: Request, res: Response) {
     try {
       const authorId = req.userId;
@@ -114,6 +109,7 @@ export class PostController {
 
       const post = await this.postRepository.findOneBy({
         id: parseInt(req.params.id, 10),
+        author: { id: authorId }
       });
       if (!post) {
         return res.status(404).json({ message: 'Post not found' });
@@ -126,7 +122,6 @@ export class PostController {
     }
   }
 
-  // Delete a post
   async deletePost(req: Request, res: Response) {
     try {
       const authorId = req.userId;
@@ -135,17 +130,24 @@ export class PostController {
         return res.status(400).json({ message: 'Author ID is missing from request' });
       }
 
-      const result = await this.postRepository.delete(parseInt(req.params.id, 10));
-      if (result.affected === 0) {
-        return res.status(404).json({ message: 'Post not found' });
+      // const result = await this.postRepository.delete(parseInt(req.params.id, 10));
+      const post = await this.postRepository.findOneBy({
+        id:parseInt(req.params.id),
+        author: { id: authorId },
+      });
+      
+      if (!post) {
+        return res.status(404).json({ message: 'Post not found or unauthorized' });
       }
-      res.status(204).send();
+      
+      await this.postRepository.remove(post);
+
+      res.status(204).json({ message: 'Post deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error deleting post', error });
     }
   }
   
-  // Get posts by hashtags
   async getPostsByHashtag(req: Request, res: Response) {
     try {
       const { tag } = req.params;
