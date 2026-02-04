@@ -106,10 +106,10 @@ Note: The test script follows a consistent structure for all entities and endpoi
 4. ✅ Plan smart indexing
 5. ✅ Maintain code quality
 6. ✅ Keep structure consistent
-
-- ⚠️ Do not use LLMs for this assignment
-- All code should be written by you
-- Solutions should demonstrate your own understanding and skills
+7. ✅ LLM Usage Guidelines:
+   - You are free to use LLMs for assistance
+   - Be prepared to explain any code you submit
+   - Use LLMs as a tool, not as a replacement for your understanding
 
 ## 📤 Submission Instructions
 
@@ -130,16 +130,6 @@ To submit your completed assignment:
   - Indexing strategy for performance optimization
   - Scalability considerations and solutions
   - Any other important design considerations
-- ⚠️ Ensure migrations run correctly - submissions which fail the migration script will be disqualified
-
-## 🎙️ Interview Process
-
-If selected for an interview, you will be asked to:
-
-- Extend this assignment with additional features in real-time
-- Answer questions about your code, design patterns, and technical decisions
-
-Please have your development environment fully configured and ready before the interview session.
 
 ## 🚀 Getting Started
 

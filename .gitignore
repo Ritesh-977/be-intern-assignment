@@ -4,9 +4,6 @@ npm-debug.log
 yarn-debug.log
 yarn-error.log
 
-# markdown files
-EXTENSION.md
-
 # TypeScript build output
 dist/
 build/
